@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <time.h>
 
+// testando 123 aaa
+
 typedef struct{
     int ** matriz;
 }campo;
