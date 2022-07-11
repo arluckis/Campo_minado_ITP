@@ -7,23 +7,21 @@
 
 // Definição da struct que armazena a matriz
 typedef struct{
-    int ** matriz;
+    char ** matriz;
 }campo;
 
 
 // Essa função cria a matriz e faz a alocação dinâmica dos ca6mpos
 void cria_campo(campo * c){
-    c[0].matriz = calloc(10, sizeof(int*));
-    c[1].matriz = calloc(10, sizeof(int*));
-    for (int i = 0; i < 10; i++)
+    c[0].matriz = calloc(10, sizeof(char*));
+    c[1].matriz = calloc(10, sizeof(char*));
+
+    for (int l = 0; l < 10; l++)
     {
-       c[0].matriz[i] = calloc(20, sizeof(int));
-       c[1].matriz[i] = calloc(20, sizeof(int));
+       c[0].matriz[l] = calloc(20, sizeof(char));
+       c[1].matriz[l] = calloc(20, sizeof(char));
     }
 }
-
-
-
 
 // Função para preencher a matriz com as minas
 void preencher_campo(campo * c){
@@ -35,9 +33,9 @@ void preencher_campo(campo * c){
     srand(time(NULL));
     
     // limpa a matriz de índices aleatórios colocando -1 em todas as posições  
-    for(int i = 0; i < 40; i++){
-        for(int a = 0; a < 2; a++){
-            indices_aleatorios[i][a] = -1;
+    for(int l = 0; l < 40; l++){
+        for(int c = 0; c < 2;c++){
+            indices_aleatorios[l][c] = -1;
         }
     }
     //-----------------------------------------------------------------------
@@ -57,7 +55,6 @@ void preencher_campo(campo * c){
         }else{
             indices_aleatorios[i][0]=linha;
             indices_aleatorios[i][1]=coluna;
-            // printf("%d %d\n", indices_aleatorios[i][0], indices_aleatorios[i][1]);
         }
         sn=0;
     }
@@ -76,14 +73,14 @@ void preencher_campo(campo * c){
 //Função para mostrar a matriz
 void print_campo(campo * c){
     int cont_linha = 0;
-    printf("    1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20 \n");
+    printf("    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19 \n");
     printf("  ---------------------------------------------------------------------------------\n");
     for (int i = 0; i < 10; i++)
     {
         printf("%d |", cont_linha);
         for (int a = 0; a < 20; a++)
         {
-            printf(" %d |", c[1].matriz[i][a]);
+            printf(" %c |", c[1].matriz[i][a]);
         }
         printf("\n");
         printf("  ---------------------------------------------------------------------------------\n");
@@ -96,7 +93,7 @@ void print_campo(campo * c){
 int main (){
 
     campo *c;
-    c = malloc (sizeof(campo)*2);
+    c = malloc (sizeof(campo)*4);
 
     cria_campo(c);
     preencher_campo(c);
