@@ -10,6 +10,22 @@ typedef struct{
     int ** matriz;
 }campo;
 
+int menu(void)
+{
+    int opcao;
+    printf("Olá! Seja bem-vindo(a) ao Campo Minado.\n Por favor, escolha uma opção de 1 a 3. \n 1 - Jogar: Modo Casual\n 2 - Modo Autônomo\n 3 - Sair.\n\n");
+    scanf("%i", &opcao);
+    if (opcao>3 || opcao<1)
+    {
+        printf("\nOpção inválida! (%i)\n\n", opcao);
+        opcao = menu();
+    }
+    else
+    {
+    return opcao;
+    }
+}
+
 
 // Essa função cria a matriz e faz a alocação dinâmica dos ca6mpos
 void cria_campo(campo * c){
@@ -93,17 +109,48 @@ void print_campo(campo * c){
 //----------------------------fim da função----------------------------------
 
 
-int main (){
-
-    campo *c;
-    c = malloc (sizeof(campo)*2);
-
-    cria_campo(c);
-    preencher_campo(c);
+void modo_casual(campo * c,campo * d)
+{
+    int opcao;
     printf("\n\n");
     printf("\t\t\t\t    CAMPO MINADO\n\n");
     print_campo(c);
+    printf("\nInforme uma coordenada: ");
+    scanf("%i", &opcao);
+    if (opcao == 1)
+    {
+        // usuário escolhe a posição 
+    }
+    else
+    {
+        printf("\nOpção inválida! (%i)\n\n", opcao);
+        modo_casual(c,d);
+    }
+}
 
+int main (){
 
-    return 0;
+    campo *c;
+    campo *d;
+    int opcao;
+    c = malloc (sizeof(campo)*2);
+    d = c;
+    cria_campo(c);
+    cria_campo(d);
+    preencher_campo(c);
+    opcao = menu();
+    if (opcao == 1)
+    {
+        printf("\nVocê selecionou a opção (%i). Iniciando Modo Casual... \n\n", opcao);
+        modo_casual(c,d);
+    }
+    else if(opcao == 2)
+    {
+        printf("\nVocê selecionou a opção (%i). Iniciando Modo Autônomo... \n\n", opcao);
+    }
+    else if(opcao == 3)
+    {
+        printf("\nVocê selecionou a opção (%i). Encerrando programa... \n\n", opcao);
+        return 0;
+    }
 }
