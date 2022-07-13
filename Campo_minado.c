@@ -10,6 +10,22 @@ typedef struct{
     char ** matriz;
 }campo;
 
+int menu(void)
+{
+    int opcao;
+    printf("Olá! Seja bem-vindo(a) ao Campo Minado.\n Por favor, escolha uma opção de 1 a 3. \n 1 - Jogar: Modo Casual\n 2 - Modo Autônomo\n 3 - Sair.\n\n");
+    scanf("%i", &opcao);
+    if (opcao>3 || opcao<1)
+    {
+        printf("\nOpção inválida! (%i)\n\n", opcao);
+        opcao = menu();
+    }
+    else
+    {
+    return opcao;
+    }
+}
+
 
 // Essa função cria a matriz e faz a alocação dinâmica dos ca6mpos
 void cria_campo(campo * c){
@@ -20,6 +36,14 @@ void cria_campo(campo * c){
     {
        c[0].matriz[l] = calloc(20, sizeof(char));
        c[1].matriz[l] = calloc(20, sizeof(char));
+    }
+    //Adiciona um espaço inicial em todas as posições 
+    for(int linha=0; linha<10 ; linha++){
+        for (int coluna = 0; coluna < 20; coluna++)
+        {
+            c[0].matriz[linha][coluna] = ' ';
+            c[1].matriz[linha][coluna] = ' ';
+        }
     }
 }
 
@@ -34,7 +58,7 @@ void preencher_campo(campo * c){
     
     // limpa a matriz de índices aleatórios colocando -1 em todas as posições  
     for(int l = 0; l < 40; l++){
-        for(int c = 0; c < 2;c++){
+        for(int c = 0; c < 2; c++){
             indices_aleatorios[l][c] = -1;
         }
     }
@@ -64,7 +88,7 @@ void preencher_campo(campo * c){
 
     for (int i = 0; i < 40; i++)
     {
-        c[0].matriz[indices_aleatorios[i][0]][indices_aleatorios[i][1]] = 1;
+        c[0].matriz[indices_aleatorios[i][0]][indices_aleatorios[i][1]] = 3;
     }
     //-----------------------------------------------------------
 }
@@ -80,7 +104,7 @@ void print_campo(campo * c){
         printf("%d |", cont_linha);
         for (int a = 0; a < 20; a++)
         {
-            printf(" %c |", c[1].matriz[i][a]);
+            printf(" %c |", c[0].matriz[i][a]);
         }
         printf("\n");
         printf("  ---------------------------------------------------------------------------------\n");
@@ -90,17 +114,50 @@ void print_campo(campo * c){
 //----------------------------fim da função----------------------------------
 
 
-int main (){
-
-    campo *c;
-    c = malloc (sizeof(campo)*4);
-
-    cria_campo(c);
-    preencher_campo(c);
+void modo_casual(campo * c, campo * d)
+{
+    int opcao;
     printf("\n\n");
     printf("\t\t\t\t    CAMPO MINADO\n\n");
     print_campo(c);
+    printf("\nInforme uma coordenada: ");
+    scanf("%i", &opcao);
+    if (opcao == 1)
+    {
+        // usuário escolhe a posição 
+    }
+    else
+    {
+        printf("\nOpção inválida! (%i)\n\n", opcao);
+        modo_casual(c,d);
+    }
+}
 
+int main (){
 
-    return 0;
+    campo *c;
+    campo *d;
+    int opcao;
+    c = malloc (sizeof(campo)*2);
+    d = c;
+
+    cria_campo(c);
+    cria_campo(d);
+    preencher_campo(c);
+    opcao = menu();
+    
+      return 0;
+    }if (opcao == 1)
+    {
+        printf("\nVocê selecionou a opção (%i). Iniciando Modo Casual... \n\n", opcao);
+        modo_casual(c,d);
+    }
+    else if(opcao == 2)
+    {
+        printf("\nVocê selecionou a opção (%i). Iniciando Modo Autônomo... \n\n", opcao);
+    }
+    else if(opcao == 3)
+    {
+        printf("\nVocê selecionou a opção (%i). Encerrando programa... \n\n", opcao);
+      
 }
